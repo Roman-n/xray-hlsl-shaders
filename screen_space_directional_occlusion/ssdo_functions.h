@@ -55,12 +55,12 @@ float sample_depth(float2 texcoord)
 {	//Samples depth buffer
 	#ifndef SSR_HALF_DEPTH	
 		#ifndef USE_MSAA
-			float depth = s_position.SampleLevel(smp_nofilter, refl_tc.xy, 0).z;
+			float depth = s_position.SampleLevel(smp_nofilter, sample_depth.xy, 0).z;
 		#else
-			float depth = s_position.Load(int3(refl_tc.xy * pos_decompression_params2.xy,0),0).z;
+			float depth = s_position.Load(int3(sample_depth.xy * pos_decompression_params2.xy,0),0).z;
 		#endif
 	#else
-			float depth = s_half_depth.SampleLevel(smp_nofilter, refl_tc.xy, 0).x;
+			float depth = s_half_depth.SampleLevel(smp_nofilter, sample_depth.xy, 0).x;
 	#endif 
 	
 	return depth;
